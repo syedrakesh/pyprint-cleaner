@@ -99,7 +99,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 ## 🌐 Links
 
 - **Homepage:** [GitHub Repository](https://github.com/syedrakesh/print-cleaner)
-- **PyPI:** Coming soon 🚀
+- **PyPI:** https://pypi.org/project/print-cleaner
 
 ---
 
