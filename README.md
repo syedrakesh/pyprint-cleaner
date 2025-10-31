@@ -1,6 +1,6 @@
-# 🧹 print-cleaner
+# 🧹 pyprint-cleaner
 
-**print-cleaner** is a simple yet powerful developer utility that automatically **comments out** or **uncomments** all `print()` statements in your Python project.
+**pyprint-cleaner** is a simple yet powerful developer utility that automatically **comments out** or **uncomments** all `print()` statements in your Python project.
 
 This helps you keep your production code clean while easily restoring debug logs when needed.
 
@@ -20,7 +20,7 @@ This helps you keep your production code clean while easily restoring debug logs
 ## 🧰 Installation
 
 ```bash
-pip install print-cleaner
+pip install pyprint-cleaner
 ```
 
 ---
@@ -42,7 +42,7 @@ Each modified file gets a `.bak` backup for safety.
 ```bash
 uncomment-prints
 ```
-Restores all lines previously commented by `print-cleaner` (lines starting with `# [auto] print(...)`).
+Restores all lines previously commented by `pyprint-cleaner` (lines starting with `# [auto] print(...)`).
 
 ---
 
@@ -98,8 +98,8 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ## 🌐 Links
 
-- **Homepage:** [GitHub Repository](https://github.com/syedrakesh/print-cleaner)
-- **PyPI:** https://pypi.org/project/print-cleaner
+- **Homepage:** [GitHub Repository](https://github.com/syedrakesh/pyprint-cleaner)
+- **PyPI:** https://pypi.org/project/pyprint-cleaner
 
 ---
 

@@ -3,8 +3,8 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "print-cleaner"
-version = "1.0.0"
+name = "pyprint-cleaner"
+version = "1.0.1"
 description = "A simple tool to comment or uncomment all print() statements in Python projects."
 authors = [
     { name = "Syed Rakesh Uddin" }
@@ -15,9 +15,9 @@ requires-python = ">=3.7"
 keywords = ["print", "cleanup", "comment", "automation", "devtool"]
 
 [project.urls]
-Homepage = "https://github.com/syedrakesh/print-cleaner"
-Repository = "https://github.com/syedrakesh/print-cleaner"
+Homepage = "https://github.com/syedrakesh/pyprint-cleaner"
+Repository = "https://github.com/syedrakesh/pyprint-cleaner"
 
 [project.scripts]
-comment-prints = "print_cleaner.comment_prints:main"
-uncomment-prints = "print_cleaner.uncomment_prints:main"
+comment-prints = "pyprint_cleaner.comment_prints:main"
+uncomment-prints = "pyprint_cleaner.uncomment_prints:main"

@@ -3,7 +3,7 @@ import re
 
 def uncomment_prints(root_dir):
     """
-    Uncomments lines that were commented by print_cleaner (i.e., lines starting with '# [auto] print').
+    Uncomments lines that were commented by pyprint_cleaner (i.e., lines starting with '# [auto] print').
     """
     comment_pattern = re.compile(r'^\s*#\s*\[auto\]\s*print\s*\(.*\)')
     
