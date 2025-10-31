@@ -69,12 +69,12 @@ def comment_unnecessary_prints(root_dir):
                 os.rename(file_path, backup_path)
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.writelines(new_lines)
-                # print(f"📝 Commented prints in: {file_path}")
+                print(f"📝 Commented prints in: {file_path}")
 
 
 def main():
     import os
     project_dir = os.getcwd()
-    # print(f"📂 Using current directory: {project_dir}")
+    print(f"📂 Using current directory: {project_dir}")
     comment_unnecessary_prints(project_dir)
-    # print("🎉 Done! All safe prints have been commented.")
+    print("🎉 Done! All safe prints have been commented.")
