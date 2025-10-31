@@ -30,11 +30,11 @@ def uncomment_prints(root_dir):
                 os.rename(file_path, backup_path)
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.writelines(new_lines)
-                print("🔄 Uncommented prints in: {file_path}")
+                print(f"🔄 Uncommented prints in: {file_path}")
 
 
 def main():
     project_dir = os.getcwd()
-    print("📂 Using current directory: {project_dir}")
+    print(f"📂 Using current directory: {project_dir}")
     uncomment_prints(project_dir)
     print("🎉 Done! All prints have been uncommented.")
