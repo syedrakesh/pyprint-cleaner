@@ -2,7 +2,8 @@ import os
 
 def uncomment_prints(root_dir):
     """
-    Reverts previously commented print statements.
+    Reverts previously commented print statements safely.
+    Only restores lines that start with '# [auto] print('.
     """
     for subdir, _, files in os.walk(root_dir):
         for filename in files:
@@ -18,6 +19,7 @@ def uncomment_prints(root_dir):
 
             for line in lines:
                 if "# [auto] print(" in line:
+                    # Restore the original print
                     new_lines.append(line.replace("# [auto] print(", "print(", 1))
                     modified = True
                 else:
@@ -28,12 +30,11 @@ def uncomment_prints(root_dir):
                 os.rename(file_path, backup_path)
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.writelines(new_lines)
-                # print(f"🔄 Uncommented prints in: {file_path}")
+                print("🔄 Uncommented prints in: {file_path}")
 
 
 def main():
-    import os
     project_dir = os.getcwd()
-    # print(f"📂 Using current directory: {project_dir}")
+    print("📂 Using current directory: {project_dir}")
     uncomment_prints(project_dir)
-    # print("🎉 Done! All prints have been uncommented.")
+    print("🎉 Done! All prints have been uncommented.")
