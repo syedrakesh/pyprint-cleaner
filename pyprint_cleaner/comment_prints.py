@@ -1,6 +1,7 @@
 import os
 import shutil
 
+
 def get_backup_dir(project_dir):
     """Return (and create) the backup directory inside the project."""
     backup_dir = os.path.join(project_dir, ".print_backups")
@@ -9,20 +10,40 @@ def get_backup_dir(project_dir):
 
 
 def is_block_start(line: str) -> bool:
-    """Detects Python block starters."""
+    """Detect Python block starters like if, for, try, etc."""
     stripped = line.strip()
     return stripped.startswith((
-        "if ", "else:", "elif ", "try:", "except", "finally:",
+        "if ", "elif ", "else:", "try:", "except", "finally:",
         "for ", "while ", "with ", "def ", "class "
     )) and stripped.endswith(":")
 
 
+def get_block_lines(lines, start_index, block_indent):
+    """
+    Collect all lines belonging to a given block starting from start_index.
+    Returns a list of stripped code lines (non-comments, non-empty).
+    """
+    collected = []
+    for j in range(start_index, len(lines)):
+        next_line = lines[j]
+        next_stripped = next_line.strip()
+        next_indent = len(lines[j]) - len(lines[j].lstrip())
+
+        if next_indent <= block_indent and j != start_index:
+            break
+        if next_stripped and not next_stripped.startswith("#"):
+            collected.append(next_stripped)
+    return collected
+
+
 def comment_unnecessary_prints(root_dir):
     """
-    Comments out print() calls safely while keeping single-print-only blocks untouched.
-    Backs up each modified file into a .print_backups folder at project root.
+    Comments out print() and print(f...) safely.
+    Skips blocks where print() is the only statement.
+    Creates .bak backups in .print_backups folder at project root.
     """
     backup_dir = get_backup_dir(root_dir)
+    print(f"📂 Scanning project: {root_dir}")
 
     for subdir, _, files in os.walk(root_dir):
         if backup_dir in subdir:
@@ -45,62 +66,51 @@ def comment_unnecessary_prints(root_dir):
                 stripped = line.strip()
                 indent = len(line) - len(line.lstrip())
 
-                # Skip comments and blank lines
                 if not stripped or stripped.startswith("#"):
                     new_lines.append(line)
                     continue
 
-                # Track block start
+                # Track block structure
                 if is_block_start(line):
                     block_stack.append(indent)
                     new_lines.append(line)
                     continue
 
-                # Detect block end
                 while block_stack and indent <= block_stack[-1]:
                     block_stack.pop()
 
-                # Detect print or f-string print
+                # Detect print
                 if stripped.startswith("print(") or stripped.startswith("print(f"):
                     block_indent = block_stack[-1] if block_stack else -1
-                    block_lines = []
+                    block_lines = get_block_lines(lines, i, block_indent)
+                    code_line_count = len(block_lines)
 
-                    # Collect all lines in same block
-                    j = i
-                    while j < len(lines):
-                        next_line = lines[j].strip()
-                        next_indent = len(lines[j]) - len(lines[j].lstrip())
-                        if next_indent <= block_indent and j != i:
-                            break
-                        if next_line and not next_line.startswith("#"):
-                            block_lines.append(next_line)
-                        j += 1
-
-                    # Skip if print is the only statement in the block
-                    if len(block_lines) == 1:
+                    # Skip single-line print-only blocks
+                    if code_line_count == 1:
                         new_lines.append(line)
                         continue
 
-                    # Safe to comment
-                    commented_line = line.replace("print(", "# [auto] print(", 1)
-                    new_lines.append(commented_line)
+                    commented = line.replace("print(", "# [auto] print(", 1)
+                    new_lines.append(commented)
                     modified = True
                 else:
                     new_lines.append(line)
 
-            # Save modified file + backup
+            # Save modified + backup original
             if modified:
                 backup_path = os.path.join(backup_dir, os.path.basename(file_path) + ".bak")
                 shutil.copy(file_path, backup_path)
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.writelines(new_lines)
                 print(f"📝 Commented prints in: {file_path}")
-            else:
-                new_lines = None
+
+    print("✅ Done! All safe print() statements commented.")
 
 
 def main():
     project_dir = os.getcwd()
-    print(f"📂 Scanning project: {project_dir}")
     comment_unnecessary_prints(project_dir)
-    print("✅ Done! All safe print() statements commented.")
+
+
+if __name__ == "__main__":
+    main()
