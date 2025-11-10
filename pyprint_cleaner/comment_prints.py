@@ -132,8 +132,24 @@ def process_file(file_path: Path):
                         in_single_line_block = True
                         break
 
+            # Check if inside a single-line block
             if in_single_line_block:
-                continue  # Skip commenting
+                # Find the block start line
+                block_start = next((s for s, b in blocks.items() if i in b), None)
+                block_header = lines[block_start].strip() if block_start is not None else ""
+
+                # Allow commenting inside non-structural blocks (e.g. if total_changes:)
+                if block_header.startswith(("if ", "elif ", "else:", "try:", "except", "finally:")):
+                    # Check if previous line inside block is executable
+                    exec_lines = [idx for idx in blocks[block_start] if is_executable_line(lines[idx])]
+                    if len(exec_lines) == 1 and exec_lines[0] == i:
+                        # Safe to comment dynamically — because block still has meaning
+                        indent = " " * (len(line) - len(line.lstrip()))
+                        new_lines[i] = f"{indent}# [auto] {stripped}\n"
+                        total_changes += 1
+                        continue
+                else:
+                    continue  # still skip structural single-line prints
 
             # Comment the print
             indent = " " * (len(line) - len(line.lstrip()))
