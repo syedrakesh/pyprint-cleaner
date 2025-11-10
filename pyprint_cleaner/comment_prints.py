@@ -158,5 +158,10 @@ def comment_unnecessary_prints():
     print("\n🎯 Print commenting complete!")
 
 
-if __name__ == "__main__":
+def main():
+    """CLI entry point for `comment-prints` command."""
     comment_unnecessary_prints()
+
+
+if __name__ == "__main__":
+    main()

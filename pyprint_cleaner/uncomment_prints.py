@@ -75,5 +75,10 @@ def uncomment_prints():
     restore_auto_commented_prints(project_dir, dry_run=dry_run)
 
 
-if __name__ == "__main__":
+def main():
+    """CLI entry point for `uncomment-prints` command."""
     uncomment_prints()
+
+
+if __name__ == "__main__":
+    main()
