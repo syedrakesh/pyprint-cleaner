@@ -69,11 +69,11 @@ def restore_auto_commented_prints(root_dir, dry_run=False):
         print(f"✅ Restored {restored_lines_total} print(s) across {restored_files} file(s).")
 
 
-def main():
+def uncomment_prints():
     project_dir = os.getcwd()
     dry_run = False  # set True to preview changes
     restore_auto_commented_prints(project_dir, dry_run=dry_run)
 
 
 if __name__ == "__main__":
-    main()
+    uncomment_prints()

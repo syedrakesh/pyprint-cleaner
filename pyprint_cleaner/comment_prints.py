@@ -151,7 +151,7 @@ def process_file(file_path: Path):
 # ---------------------------------------------------------------------
 # Main Execution
 # ---------------------------------------------------------------------
-def main():
+def comment_unnecessary_prints():
     print("🔍 Scanning project for Python files...")
     for py_file in list_py_files(PROJECT_DIR):
         process_file(py_file)
@@ -159,4 +159,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    comment_unnecessary_prints()
