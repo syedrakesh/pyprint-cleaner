@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyprint-cleaner"
-version = "1.2.2"
+version = "1.2.3"
 description = "A simple tool to comment or uncomment all print() statements in Python projects."
 authors = [
     { name = "Syed Rakesh Uddin" }

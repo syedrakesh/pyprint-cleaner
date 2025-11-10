@@ -24,7 +24,7 @@ from pathlib import Path
 # ---------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------
-PROJECT_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = Path(os.getcwd())  # directory where user runs the command
 BACKUP_DIR = PROJECT_DIR / ".print_backups"
 BACKUP_DIR.mkdir(exist_ok=True)
 
