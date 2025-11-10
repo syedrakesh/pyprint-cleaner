@@ -83,7 +83,7 @@ def detect_blocks(lines):
             stack.pop()
 
         # Start of a new block
-        if stripped.endswith(":") and any(stripped.startswith(k) for k in BLOCK_STARTERS):
+        if stripped.endswith(":") and any(stripped.startswith(k.rstrip()) for k in BLOCK_STARTERS):
             stack.append({"indent": indent, "start": i, "lines": []})
         else:
             # Add line to current block
